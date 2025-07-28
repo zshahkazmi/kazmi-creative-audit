@@ -1,25 +1,18 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request
 import os
-import time
-from audit_tool import website_audit, generate_pdf_report
+from audit_tool import audit_website
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == "POST":
-        url = request.form.get("url")
+    report = None
+    if request.method == 'POST':
+        url = request.form.get('url')
         if url:
-            report = website_audit(url)
-            filename = f"Kazmi_Creative_Audit_{int(time.time())}.pdf"
-            filepath = os.path.join("reports", filename)
-            os.makedirs("reports", exist_ok=True)
-            generate_pdf_report(report, filename=filepath)
-            return send_file(filepath, as_attachment=True)
-    return render_template("index.html")
+            report = audit_website(url)
+    return render_template('index.html', report=report)
 
 if __name__ == '__main__':
-    import os
     port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port)
-
