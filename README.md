@@ -14,12 +14,17 @@ This is a web-based version of the Kazmi_Creative website audit tool.
 pip install -r requirements.txt
 ```
 
-2. Run the Flask app:
+2. (Optional) Configure a Google PageSpeed API key to enable performance scoring:
+```bash
+export PAGESPEED_API_KEY="your_api_key_here"
+```
+
+3. Run the Flask app:
 ```bash
 python app.py
 ```
 
-3. Open the tool in your browser at:
+4. Open the tool in your browser at:
 ```
 http://127.0.0.1:5000
 ```
